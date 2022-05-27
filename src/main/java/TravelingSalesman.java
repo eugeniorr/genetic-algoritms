@@ -50,7 +50,7 @@ public class TravelingSalesman {
             int numberOfCities, SelectionType selectionType, int[][] travelPrices, int startingCity, int targetFitness
     ) {
         this.numberOfCities = numberOfCities;
-        this.genomeSize = numberOfCities-1;
+        this.genomeSize = numberOfCities - 1;
         this.selectionType = selectionType;
         this.travelPrices = travelPrices;
         this.startingCity = startingCity;
@@ -74,9 +74,6 @@ public class TravelingSalesman {
     // Мы выбираем геномы reproductionSize на основе метода, предопределенного в атрибуте selectionType
     public List<SalesmanGenome> selection(List<SalesmanGenome> population) {
         List<SalesmanGenome> selected = new ArrayList<>();
-
-        // TODO: for what?
-        SalesmanGenome winner;
 
         for(int i = 0; i < reproductionSize; i++) {
             if(selectionType == SelectionType.ROULETTE) {
@@ -136,7 +133,7 @@ public class TravelingSalesman {
         return Collections.min(selected);
     }
 
-    public List<SalesmanGenome> crossover(List<SalesmanGenome> parents){
+    public List<SalesmanGenome> crossover(List<SalesmanGenome> parents) {
         // Подготовка
         Random random = new Random();
         int breakpoint = random.nextInt(genomeSize);
@@ -201,7 +198,7 @@ public class TravelingSalesman {
     public SalesmanGenome optimize() {
         List<SalesmanGenome> population = initialPopulation();
         SalesmanGenome globalBestGenome = population.get(0);
-        for(int i = 0; i < maxIterations; i++){
+        for(int i = 0; i < maxIterations; i++) {
             List<SalesmanGenome> selected = selection(population);
             population = createGeneration(selected);
             globalBestGenome = Collections.min(population);
@@ -209,12 +206,5 @@ public class TravelingSalesman {
                 break;
         }
         return globalBestGenome;
-    }
-
-    // TODO: for what?
-    public void printGeneration(List<SalesmanGenome> generation) {
-        for(SalesmanGenome genome : generation) {
-            System.out.println(genome);
-        }
     }
 }
