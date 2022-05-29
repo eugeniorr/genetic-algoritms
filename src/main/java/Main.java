@@ -36,12 +36,14 @@ public class Main {
                     }
                 }
             }
-
+            scanner.close();
             printTravelPrices(travelPrices, numberOfCities);
 
+            long time = System.currentTimeMillis();
             TravelingSalesman geneticAlgorithm = new TravelingSalesman(numberOfCities, SelectionType.ROULETTE, travelPrices, 0, 0);
             SalesmanGenome result = geneticAlgorithm.optimize();
             System.out.println(result);
+            System.out.println("Час рахування: " + (System.currentTimeMillis() - time));
         } else if (userAnswer.equals("ні")) {
             int numberOfCities = 4;
             int[][] travelPrices = new int[numberOfCities][numberOfCities];
@@ -59,9 +61,11 @@ public class Main {
 
             printTravelPrices(travelPrices, numberOfCities);
 
+            long time = System.currentTimeMillis();
             TravelingSalesman geneticAlgorithm = new TravelingSalesman(numberOfCities, SelectionType.ROULETTE, travelPrices, 0, 0);
             SalesmanGenome result = geneticAlgorithm.optimize();
             System.out.println(result);
+            System.out.println("Час рахування: " + (System.currentTimeMillis() - time));
         } else {
             System.out.println("Відповідь некоректна!");
         }

@@ -5,45 +5,45 @@ import java.util.Random;
 
 public class TravelingSalesman {
 
-    // Размер поколения - это количество геномов / особей в каждом поколении / популяции.
-    // Этот параметр также часто называют численностью популяции.
+    // Розмір покоління – це кількість геномів / особин у кожному поколінні / популяції
+    // Цей параметр також часто називають чисельністю популяції
     private int generationSize;
 
-    // Размер генома - это длина ArrayList генома, которая будет равна numberOfCities - 1.
-    // Две переменные разделены для ясности в остальной части кода.
-    // Этот параметр также часто называют длиной хромосомы.
+    // Розмір геному - це довжина генома ArrayList, яка дорівнює numberOfCities - 1
+    // Дві змінні розділені для ясності у решті коду.
+    // Цей параметр також часто називають довжиною хромосоми
     private int genomeSize;
     private int numberOfCities;
 
-    // Размер репродукции — это количество геномов, которые будут выбраны для воспроизведения,
-    // чтобы создать следующее поколение. Этот параметр также часто называют скоростью кроссинговера.
+    // Розмір репродукції — кількість геномів, які будуть обрані для відтворення,
+    // щоб створити наступне покоління. Цей параметр також часто називають швидкістю кросинговеру
     private int reproductionSize;
 
     // Максимальное количество итераций - это максимальное количество поколений,
-    // в которых программа будет развиваться до завершения, в случае, если до этого не будет сходимости.
+    // у яких програма буде розвиватися до завершення, якщо до цього не буде збіжності
     private int maxIterations;
 
-    //Скорость мутации относится к частоте мутаций при создании нового поколения.
+    // Швидкість мутації відноситься до частоти мутацій при створенні нового покоління
     private float mutationRate;
 
-    // Размер турнира для турнирного варианта селекции.
+    // Розмір турніру для турнірного варіанта селекції
     private int tournamentSize;
 
-    // Тип селекции (турнир или рулетка)
+    // Тип селекції (турнір або рулетка)
     private SelectionType selectionType;
 
-    // Цены на проезд - это матрица цен на проезд между каждыми двумя городами - эта матрица
-    // будет иметь нули по диагонали и симметричные значения в нижнем и верхнем треугольнике.
+    // Ціни на проїзд – це матриця цін на проїзд між кожними двома містами – ця матриця
+    // матиме нулі по діагоналі та симетричні значення у нижньому та верхньому трикутнику
     private int[][] travelPrices;
 
-    // Индекс начального города.
+    // Індекс початкового міста
     private int startingCity;
 
-    // Целевая пригодность — это приспособленность, которой должен достичь лучший геном в соответствии с
-    // целевой функцией (которая в нашей реализации будет такой же, как и функция приспособленности),
-    // чтобы программа завершилась досрочно. Иногда установка целевого фитнеса может сократить программу,
-    // если нам нужно только определенное значение или лучше. Здесь, если мы хотим, чтобы наши затраты были ниже
-    // определенного числа, но не важно, насколько низко, мы можем использовать его для установки этого порога.
+    // Цільова придатність - це пристосованість, якої повинен досягти найкращий геном відповідно до
+    // цільової функції (яка в нашій реалізації буде такою ж, як і функція пристосованості),
+    // щоб програма завершилася достроково. Іноді встановлення цільового фітнесу може скоротити програму,
+    // якщо нам потрібне лише певне значення або краще. Тут, якщо ми хочемо, щоб наші витрати були нижчими
+    // певного числа, але не важливо, наскільки низько ми можемо використовувати його для встановлення цього порога
     private int targetFitness;
 
     public TravelingSalesman(
@@ -71,7 +71,7 @@ public class TravelingSalesman {
         return population;
     }
 
-    // Мы выбираем геномы reproductionSize на основе метода, предопределенного в атрибуте selectionType
+    // Ми вибираємо геноми reproductionSize на основі методу, визначеного в атрибуті selectionType
     public List<SalesmanGenome> selection(List<SalesmanGenome> population) {
         List<SalesmanGenome> selected = new ArrayList<>();
 
@@ -89,16 +89,16 @@ public class TravelingSalesman {
     public SalesmanGenome rouletteSelection(List<SalesmanGenome> population) {
         int totalFitness = population.stream().map(SalesmanGenome::getFitness).mapToInt(Integer::intValue).sum();
 
-        // Мы выбираем случайное значение - точку на нашем колесе рулетки
+        // Ми вибираємо випадкове значення – точку на нашому колесі рулетки
         Random random = new Random();
         int selectedValue = random.nextInt(totalFitness);
 
-        // Так как мы делаем минимизацию, нам нужно использовать взаимное значение, чтобы вероятность
-        // выбора генома была обратно пропорционально его пригодности:
-        // чем меньше пригодность - тем выше вероятность
+        // Так як ми робимо мінімізацію, нам потрібно використовувати взаємне значення, щоб ймовірність
+        // вибору геному була обернено пропорційно його придатності:
+        // чим менша придатність - тим вище ймовірність
         float recValue = (float) 1 / selectedValue;
 
-        // Мы суммируем значения, пока не достигнем recValue, и выбираем геном, перешагнувший порог
+        // Ми підсумовуємо значення, поки не досягнемо recValue, і вибираємо геном, що переступив поріг
         float currentSum = 0;
         for(SalesmanGenome genome : population) {
             currentSum +=  1. / genome.getFitness();
@@ -107,12 +107,12 @@ public class TravelingSalesman {
             }
         }
 
-        // Если возврат не произошел в цикле выше, мы просто выбираем наугад
+        // Якщо повернення не відбулося в циклі вище, ми просто вибираємо навмання
         int selectRandom = random.nextInt(generationSize);
         return population.get(selectRandom);
     }
 
-    // Вспомогательная функция для выбора n случайных элементов из совокупности чтобы мы могли ввести их в турнир
+    // Допоміжна функція для вибору n випадкових елементів із сукупності, щоб ми могли ввести їх у турнір
     public static <E> List<E> pickNRandomElements(List<E> list, int n) {
         Random r = new Random();
         int length = list.size();
@@ -127,33 +127,33 @@ public class TravelingSalesman {
         return list.subList(length - n, length);
     }
 
-    // Простая реализация детерминированного турнира - лучший геном всегда выигрывает
+    // Проста реалізація детермінованого турніру – найкращий геном завжди виграє
     public SalesmanGenome tournamentSelection(List<SalesmanGenome> population) {
         List<SalesmanGenome> selected = pickNRandomElements(population,tournamentSize);
         return Collections.min(selected);
     }
 
     public List<SalesmanGenome> crossover(List<SalesmanGenome> parents) {
-        // Подготовка
+        // Підготовка
         Random random = new Random();
         int breakpoint = random.nextInt(genomeSize);
         List<SalesmanGenome> children = new ArrayList<>();
 
-        // Копируем родительские геномы чтобы не модифицировать, если бы они были
-        // выбраны для участия в кроссовере несколько раз
+        // Копіюємо батьківські геноми, щоб не модифікувати, якби вони були
+        // вибрано для участі в кросовері кілька разів
         List<Integer> parent1Genome = new ArrayList<>(parents.get(0).getGenome());
         List<Integer> parent2Genome = new ArrayList<>(parents.get(1).getGenome());
 
-        // Создание первого потомка
+        // Створення першого нащадка
         for(int i = 0; i < breakpoint; i++) {
             int newVal;
             newVal = parent2Genome.get(i);
             Collections.swap(parent1Genome, parent1Genome.indexOf(newVal), i);
         }
         children.add(new SalesmanGenome(parent1Genome, numberOfCities, travelPrices, startingCity));
-        parent1Genome = parents.get(0).getGenome(); // Сброс отредактированного родителя
+        parent1Genome = parents.get(0).getGenome(); // Скидання відредагованого батька
 
-        // Создание второго потомка
+        // Створення другого нащадка
         for(int i = breakpoint; i < genomeSize; i++) {
             int newVal = parent1Genome.get(i);
             Collections.swap(parent2Genome,parent2Genome.indexOf(newVal), i);
@@ -163,9 +163,9 @@ public class TravelingSalesman {
         return children;
     }
 
-    // Мутация довольно проста - если мы пройдем проверку вероятности, мы мутируем,
-    // поменяв местами два города в геноме
-    // В противном случае мы просто возвращаем исходный геном
+    // Мутація досить проста - якщо ми пройдемо перевірку ймовірності, ми мутуємо,
+    // помінявши місцями два міста у геномі
+    // Інакше ми просто повертаємо вихідний геном
     public SalesmanGenome mutate(SalesmanGenome salesman) {
         Random random = new Random();
         float mutate = random.nextFloat();
@@ -177,7 +177,7 @@ public class TravelingSalesman {
         return salesman;
     }
 
-    // Мы используем алгоритм поколений, поэтому мы создаем совершенно новую популяцию детей
+    // Ми використовуємо алгоритм поколінь, тому ми створюємо нову популяцію дітей
     public List<SalesmanGenome> createGeneration(List<SalesmanGenome> population) {
         List<SalesmanGenome> generation = new ArrayList<>();
         int currentGenerationSize = 0;
@@ -192,9 +192,9 @@ public class TravelingSalesman {
         return generation;
     }
 
-    // Мы прекращаем действие при следующих условиях:
-    //    1. Количество поколений достигло maxIterations
-    //    2. Лучшая длина пути генома меньше, чем длина целевого пути
+    // Ми припиняємо дію за таких умов:
+    //    1. Кількість поколінь досягла maxIterations
+    //    2. Найкраща довжина шляху геному менша, ніж довжина цільового шляху
     public SalesmanGenome optimize() {
         List<SalesmanGenome> population = initialPopulation();
         SalesmanGenome globalBestGenome = population.get(0);

@@ -3,20 +3,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class SalesmanGenome implements Comparable {
-    // Список городов в порядке их посещения
-    // Эта последовательность представляет решение проблемы
+    // Список міст у порядку їх відвідування
+    // Ця послідовність є вирішенням проблеми
     List<Integer> genome;
 
-    // Цены на поездки удобны тем, что можно вычислить фитнесс-функцию
+    // Ціни на поїздки зручні тим, що можна обчислити фітнес-функцію
     int[][] travelPrices;
 
-    // Хотя начальный город не меняет решения задачи, удобно просто выбрать один,
-    // чтобы можно было быть уверенным, что он одинаков во всех геномах
+    // Хоча початкове місто не змінює рішення задачі, зручно просто вибрати одне,
+    // щоб можна було бути впевненим, що він однаковий у всіх геномах
     int startingCity;
     int numberOfCities = 0;
     int fitness;
 
-    // Генерирует случайный геном
+    // Генерує випадковий геном
     public SalesmanGenome(int numberOfCities, int[][] travelPrices, int startingCity) {
         this.travelPrices = travelPrices;
         this.startingCity = startingCity;
@@ -25,7 +25,7 @@ public class SalesmanGenome implements Comparable {
         fitness = this.calculateFitness();
     }
 
-    // Генерирует заданный пользователем геном
+    // Генерує заданий користувачем геном
     public SalesmanGenome(List<Integer> permutationOfCities, int numberOfCities, int[][] travelPrices, int startingCity) {
         genome = permutationOfCities;
         this.travelPrices = travelPrices;
@@ -38,21 +38,21 @@ public class SalesmanGenome implements Comparable {
         int fitness = 0;
         int currentCity = startingCity;
 
-        // Расчет стоимости пути
+        // Розрахунок вартості шляху
         for (int gene : genome) {
             fitness += travelPrices[currentCity][gene];
             currentCity = gene;
         }
 
-        // Мы должны добавить возвращение в начальный город, чтобы завершить круг
-        // в геноме отсутствует начальный город, и индексация начинается с 0, поэтому мы вычитаем 2
+        // Ми повинні додати повернення до початкового міста, щоб завершити коло
+        // В геномі відсутнє початкове місто, і індексація починається з 0, тому ми віднімаємо 2
         fitness += travelPrices[genome.get(numberOfCities - 2)][startingCity];
         return fitness;
     }
 
-    // Генерирует случайный геном
-    // Геномы — это перестановки списка городов, за исключением начального города,
-    // поэтому мы добавляем их все в список и перемешиваем
+    // Генерує випадковий геном
+    // Геноми - це перестановки списку міст, за винятком початкового міста,
+    // тому ми додаємо їх у список і перемішуємо
     private List<Integer> randomSalesman() {
         List<Integer> result = new ArrayList<>();
         for(int i = 0; i < numberOfCities; i++) {
@@ -83,7 +83,7 @@ public class SalesmanGenome implements Comparable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Path: ");
+        sb.append("Шлях: ");
         sb.append(startingCity);
         for ( int gene: genome ) {
             sb.append(" ");
@@ -91,7 +91,7 @@ public class SalesmanGenome implements Comparable {
         }
         sb.append(" ");
         sb.append(startingCity);
-        sb.append("\nLength: ");
+        sb.append("\nДлина: ");
         sb.append(this.fitness);
         return sb.toString();
     }
