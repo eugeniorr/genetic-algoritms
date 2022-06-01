@@ -13,7 +13,7 @@ public class Main {
                     System.out.print(' ');
                 }
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -25,7 +25,7 @@ public class Main {
             System.out.println("Введіть кількість міст: ");
             int numberOfCities = scanner.nextInt();
             int[][] travelPrices = new int[numberOfCities][numberOfCities];
-            System.out.println("Введіть коштовність переїзду між містами (з 1-го у 2-ге, з 2-го у 3-тє і т.д.): ");
+            System.out.println("Введіть коштовність переїзду між містами (1 -> 2, 1 -> 3, 2 -> 3, 1 -> 4, 2 -> 4, 3 -> 4 і т.д.): ");
             for(int i = 0; i < numberOfCities; i++) {
                 for(int j = 0; j <= i; j++) {
                     if(i == j) {
@@ -45,7 +45,8 @@ public class Main {
             System.out.println(result);
             System.out.println("Час рахування: " + (System.currentTimeMillis() - time));
         } else if (userAnswer.equals("ні")) {
-            int numberOfCities = 4;
+            System.out.println("Введіть кількість міст: ");
+            int numberOfCities = scanner.nextInt();
             int[][] travelPrices = new int[numberOfCities][numberOfCities];
             for(int i = 0; i < numberOfCities; i++) {
                 for(int j = 0; j <= i; j++) {
@@ -53,7 +54,8 @@ public class Main {
                     if(i == j) {
                         travelPrices[i][j] = 0;
                     } else {
-                        travelPrices[i][j] = rand.nextInt(100);
+                        int randNum = rand.nextInt(500);
+                        travelPrices[i][j] = (randNum == 0) ? 1 : randNum;
                         travelPrices[j][i] = travelPrices[i][j];
                     }
                 }

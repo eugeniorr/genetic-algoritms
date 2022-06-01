@@ -19,7 +19,7 @@ public class TravelingSalesman {
     // щоб створити наступне покоління. Цей параметр також часто називають швидкістю кросинговеру
     private int reproductionSize;
 
-    // Максимальное количество итераций - это максимальное количество поколений,
+    // Максимальна кількість ітерацій – це максимальна кількість поколінь,
     // у яких програма буде розвиватися до завершення, якщо до цього не буде збіжності
     private int maxIterations;
 
@@ -74,7 +74,6 @@ public class TravelingSalesman {
     // Ми вибираємо геноми reproductionSize на основі методу, визначеного в атрибуті selectionType
     public List<SalesmanGenome> selection(List<SalesmanGenome> population) {
         List<SalesmanGenome> selected = new ArrayList<>();
-
         for(int i = 0; i < reproductionSize; i++) {
             if(selectionType == SelectionType.ROULETTE) {
                 selected.add(rouletteSelection(population));
@@ -82,7 +81,6 @@ public class TravelingSalesman {
                 selected.add(tournamentSelection(population));
             }
         }
-
         return selected;
     }
 
@@ -140,14 +138,13 @@ public class TravelingSalesman {
         List<SalesmanGenome> children = new ArrayList<>();
 
         // Копіюємо батьківські геноми, щоб не модифікувати, якби вони були
-        // вибрано для участі в кросовері кілька разів
+        // вибрані для участі в кросовері кілька разів
         List<Integer> parent1Genome = new ArrayList<>(parents.get(0).getGenome());
         List<Integer> parent2Genome = new ArrayList<>(parents.get(1).getGenome());
 
         // Створення першого нащадка
         for(int i = 0; i < breakpoint; i++) {
-            int newVal;
-            newVal = parent2Genome.get(i);
+            int newVal = parent2Genome.get(i);
             Collections.swap(parent1Genome, parent1Genome.indexOf(newVal), i);
         }
         children.add(new SalesmanGenome(parent1Genome, numberOfCities, travelPrices, startingCity));
@@ -203,7 +200,7 @@ public class TravelingSalesman {
             population = createGeneration(selected);
             globalBestGenome = Collections.min(population);
             if(globalBestGenome.getFitness() < targetFitness)
-                break;
+                return globalBestGenome;
         }
         return globalBestGenome;
     }

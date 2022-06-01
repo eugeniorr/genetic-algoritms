@@ -13,7 +13,7 @@ public class SalesmanGenome implements Comparable {
     // Хоча початкове місто не змінює рішення задачі, зручно просто вибрати одне,
     // щоб можна було бути впевненим, що він однаковий у всіх геномах
     int startingCity;
-    int numberOfCities = 0;
+    int numberOfCities;
     int fitness;
 
     // Генерує випадковий геном
@@ -84,13 +84,13 @@ public class SalesmanGenome implements Comparable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Шлях: ");
-        sb.append(startingCity);
+        sb.append(startingCity + 1);
         for ( int gene: genome ) {
-            sb.append(" ");
-            sb.append(gene);
+            sb.append(" -> ");
+            sb.append(gene + 1);
         }
-        sb.append(" ");
-        sb.append(startingCity);
+        sb.append(" -> ");
+        sb.append(startingCity + 1);
         sb.append("\nДлина: ");
         sb.append(this.fitness);
         return sb.toString();
