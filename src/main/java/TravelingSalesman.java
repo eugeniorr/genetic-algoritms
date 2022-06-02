@@ -56,7 +56,7 @@ public class TravelingSalesman {
         this.startingCity = startingCity;
         this.targetFitness = targetFitness;
 
-        generationSize = 5000;
+        generationSize = 1000;
         reproductionSize = 200;
         maxIterations = 1000;
         mutationRate = 0.1f;
@@ -127,7 +127,7 @@ public class TravelingSalesman {
 
     // Проста реалізація детермінованого турніру – найкращий геном завжди виграє
     public SalesmanGenome tournamentSelection(List<SalesmanGenome> population) {
-        List<SalesmanGenome> selected = pickNRandomElements(population,tournamentSize);
+        List<SalesmanGenome> selected = pickNRandomElements(population, tournamentSize);
         return Collections.min(selected);
     }
 

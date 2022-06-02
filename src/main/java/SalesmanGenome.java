@@ -68,16 +68,8 @@ public class SalesmanGenome implements Comparable {
         return genome;
     }
 
-    public int getStartingCity() {
-        return startingCity;
-    }
-
     public int getFitness() {
         return fitness;
-    }
-
-    public void setFitness(int fitness) {
-        this.fitness = fitness;
     }
 
     @Override
@@ -85,13 +77,13 @@ public class SalesmanGenome implements Comparable {
         StringBuilder sb = new StringBuilder();
         sb.append("Шлях: ");
         sb.append(startingCity + 1);
-        for ( int gene: genome ) {
+        for (int gene : genome) {
             sb.append(" -> ");
             sb.append(gene + 1);
         }
         sb.append(" -> ");
         sb.append(startingCity + 1);
-        sb.append("\nДлина: ");
+        sb.append("\nДовжина: ");
         sb.append(this.fitness);
         return sb.toString();
     }
@@ -100,12 +92,6 @@ public class SalesmanGenome implements Comparable {
     @Override
     public int compareTo(Object o) {
         SalesmanGenome genome = (SalesmanGenome) o;
-        if(this.fitness > genome.getFitness()) {
-            return 1;
-        } else if(this.fitness < genome.getFitness()) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return Integer.compare(this.fitness, genome.getFitness());
     }
 }

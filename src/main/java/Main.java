@@ -40,7 +40,7 @@ public class Main {
             printTravelPrices(travelPrices, numberOfCities);
 
             long time = System.currentTimeMillis();
-            TravelingSalesman geneticAlgorithm = new TravelingSalesman(numberOfCities, SelectionType.ROULETTE, travelPrices, 0, 0);
+            TravelingSalesman geneticAlgorithm = new TravelingSalesman(numberOfCities, SelectionType.TOURNAMENT, travelPrices, 0, 0);
             SalesmanGenome result = geneticAlgorithm.optimize();
             System.out.println(result);
             System.out.println("Час рахування: " + (System.currentTimeMillis() - time));
@@ -64,7 +64,7 @@ public class Main {
             printTravelPrices(travelPrices, numberOfCities);
 
             long time = System.currentTimeMillis();
-            TravelingSalesman geneticAlgorithm = new TravelingSalesman(numberOfCities, SelectionType.ROULETTE, travelPrices, 0, 0);
+            TravelingSalesman geneticAlgorithm = new TravelingSalesman(numberOfCities, SelectionType.TOURNAMENT, travelPrices, 0, 0);
             SalesmanGenome result = geneticAlgorithm.optimize();
             System.out.println(result);
             System.out.println("Час рахування: " + (System.currentTimeMillis() - time));
