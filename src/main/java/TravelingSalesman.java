@@ -15,6 +15,7 @@ public class TravelingSalesman {
     private int genomeSize;
     private int numberOfCities;
 
+
     // Розмір репродукції — кількість геномів, які будуть обрані для відтворення,
     // щоб створити наступне покоління. Цей параметр також часто називають швидкістю кросинговеру
     private int reproductionSize;
